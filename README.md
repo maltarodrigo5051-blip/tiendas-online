@@ -2,11 +2,11 @@
 
 Tiendas donde el cliente **compra y paga con tarjeta**. Tienen carrito, cobro, inventario y facturas.
 
-Cada carpeta de este repositorio lleva al código completo del proyecto.
+Cada carpeta de este repositorio tiene el código completo del proyecto.
 
 | Proyecto | Para qué sirve | Tecnologías | Código |
 |---|---|---|---|
-| 🛒 **GamerStore** | Tienda de tecnología y gaming con pasarela de pago propia y Stripe | Python, SQLite, JavaScript | [gamerstore](https://github.com/maltarodrigo5051-blip/gamerstore) |
+| 🛒 **GamerStore** | Tienda de tecnología y gaming con pasarela de pago propia y Stripe | Python, SQLite, JavaScript | [gamerstore](gamerstore/) |
 
 ---
 
@@ -30,7 +30,7 @@ Cada carpeta de este repositorio lleva al código completo del proyecto.
 ### Ver el código en tu computadora
 
 ```bash
-git clone --recurse-submodules https://github.com/maltarodrigo5051-blip/tiendas-online.git
+git clone https://github.com/maltarodrigo5051-blip/tiendas-online.git
 ```
 
 📂 Otros grupos: [Páginas web](https://github.com/maltarodrigo5051-blip/paginas-web) · [Sistemas](https://github.com/maltarodrigo5051-blip/sistemas)
