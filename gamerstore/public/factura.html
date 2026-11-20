@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Factura {{INV}} · {{STORE}}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink: #111827; --muted: #6b7280; --line: #e5e7eb; --soft: #f6f7fb; --cyan: #22d3ee; --violet: #8b5cf6; --pink: #e879f9; --ok: #059669; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font: 14px/1.55 "Manrope", system-ui, sans-serif; color: var(--ink); background: #0d0b1e; font-feature-settings: "tnum" 1; }
+    .bg { position: fixed; inset: 0; z-index: -1; background:
+      radial-gradient(600px 400px at 15% 10%, rgba(139, 92, 246, .35), transparent 70%),
+      radial-gradient(500px 380px at 85% 90%, rgba(34, 211, 238, .25), transparent 70%), #0d0b1e; }
+    .bar { max-width: 860px; margin: 28px auto 14px; padding: 0 16px; display: flex; gap: 10px; justify-content: space-between; align-items: center; color: #c4c1e0; }
+    .bar a { color: #c4c1e0; text-decoration: none; font-weight: 600; }
+    .bar a:hover { color: #fff; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; border: 0; border-radius: 12px; padding: 11px 18px; cursor: pointer; font: 700 14px "Manrope", sans-serif; color: #0d0b1e;
+      background: linear-gradient(120deg, var(--cyan), var(--violet) 55%, var(--pink)); box-shadow: 0 10px 30px -10px rgba(139, 92, 246, .8); transition: transform .15s; }
+    .btn:active { transform: scale(.97); }
+    .btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; }
+
+    .sheet { position: relative; max-width: 860px; margin: 0 auto 60px; background: #fff; border-radius: 18px; overflow: hidden;
+      box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .7), 0 0 0 1px rgba(255, 255, 255, .06); animation: rise .7s cubic-bezier(.22, 1, .36, 1); }
+    @keyframes rise { from { opacity: 0; transform: translateY(30px) scale(.98); } }
+    .strip { height: 8px; background: linear-gradient(90deg, var(--cyan), var(--violet), var(--pink), var(--cyan)); background-size: 300% 100%; animation: flow 6s linear infinite; }
+    @keyframes flow { to { background-position: 300% 0; } }
+    .pad { padding: 40px 48px; }
+    header { display: flex; justify-content: space-between; gap: 24px; align-items: flex-start; }
+    .brand { display: flex; gap: 14px; align-items: center; }
+    .logo { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; background: #0d0b1e; position: relative; overflow: hidden; }
+    .logo svg { width: 28px; height: 28px; }
+    .logo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, .35) 50%, transparent 70%); transform: translateX(-100%); animation: shine 3.5s ease-in-out 1s infinite; }
+    @keyframes shine { 40%, 100% { transform: translateX(100%); } }
+    .brand h1 { margin: 0; font: 700 24px "Chakra Petch", sans-serif; letter-spacing: .01em; }
+    .brand p, .from p { margin: 0; color: var(--muted); font-size: 13px; }
+    .doc { text-align: right; }
+    .doc .kind { font: 700 32px "Chakra Petch", sans-serif; letter-spacing: .02em; margin: 0;
+      background: linear-gradient(120deg, #0891b2, var(--violet)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .doc .no { font-weight: 800; font-size: 15px; }
+
+    .meta { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 16px; margin-top: 34px; padding: 20px 22px; background: var(--soft); border-radius: 14px; }
+    .meta h3 { margin: 0 0 4px; font-size: 12px; color: var(--muted); font-weight: 700; }
+    .meta p { margin: 0; }
+    .meta strong { font-size: 15px; }
+
+    table { width: 100%; border-collapse: collapse; margin-top: 30px; }
+    th { text-align: left; font-size: 12px; color: var(--muted); font-weight: 700; padding: 0 12px 10px; border-bottom: 2px solid var(--ink); }
+    td { padding: 14px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    tbody tr { animation: row .5s cubic-bezier(.22, 1, .36, 1) backwards; }
+    tbody tr:nth-child(1) { animation-delay: .25s; } tbody tr:nth-child(2) { animation-delay: .32s; } tbody tr:nth-child(3) { animation-delay: .39s; }
+    tbody tr:nth-child(4) { animation-delay: .46s; } tbody tr:nth-child(n+5) { animation-delay: .53s; }
+    @keyframes row { from { opacity: 0; transform: translateX(-10px); } }
+    .n { text-align: right; white-space: nowrap; }
+    th.n { text-align: right; }
+    td:first-child { font-weight: 600; }
+    .sku { display: block; font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: .03em; }
+
+    .bottom { display: grid; grid-template-columns: 1fr 320px; gap: 28px; margin-top: 26px; align-items: start; }
+    .pay { padding: 18px 20px; border: 1px solid var(--line); border-radius: 14px; }
+    .pay h3, .notes h3 { margin: 0 0 6px; font-size: 12px; color: var(--muted); font-weight: 700; }
+    .pay p { margin: 0; }
+    .ref { font-size: 12px; color: var(--muted); word-break: break-all; }
+    .sum div { display: flex; justify-content: space-between; padding: 7px 0; }
+    .sum .muted { color: var(--muted); }
+    .sum .total { margin-top: 8px; padding: 16px 18px; border-radius: 14px; color: #fff; font-weight: 800; font-size: 20px;
+      background: linear-gradient(120deg, #0d0b1e, #2e1065); box-shadow: 0 14px 30px -14px rgba(46, 16, 101, .8); position: relative; overflow: hidden; }
+    .sum .total::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: linear-gradient(90deg, var(--cyan), var(--violet), var(--pink)); }
+
+    .stamp { position: absolute; top: 104px; right: 250px; padding: 8px 20px; border: 4px solid var(--ok); border-radius: 10px; color: var(--ok);
+      font: 700 30px "Chakra Petch", sans-serif; letter-spacing: .12em; transform: rotate(-12deg); opacity: .9;
+      animation: stamp .55s cubic-bezier(.34, 1.56, .64, 1) .7s backwards; mix-blend-mode: multiply; }
+    @keyframes stamp { from { opacity: 0; transform: rotate(-12deg) scale(2.2); } }
+
+    .notes { margin-top: 30px; padding-top: 22px; border-top: 1px dashed var(--line); display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: end; color: var(--muted); font-size: 12.5px; }
+    .notes p { margin: 0; }
+    .thanks { font: 700 18px "Chakra Petch", sans-serif; color: var(--ink); }
+
+    @media (max-width: 700px) {
+      .pad { padding: 26px 20px; }
+      header, .bottom { grid-template-columns: 1fr; display: grid; }
+      .doc { text-align: left; }
+      .meta { grid-template-columns: 1fr; }
+      .stamp { top: 120px; right: 16px; font-size: 22px; }
+      th:nth-child(3), td:nth-child(3) { display: none; }
+    }
+    @media print {
+      body { background: #fff; }
+      .bg, .bar { display: none; }
+      .sheet { box-shadow: none; margin: 0; border-radius: 0; max-width: none; animation: none; }
+      * { animation: none !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="bar">
+    <a href="/">← Volver a la tienda</a>
+    <button class="btn" onclick="window.print()">
+      <svg viewBox="0 0 24 24"><path d="M7 9V3h10v6M7 18H4v-7h16v7h-3M7 14h10v7H7z"/></svg>
+      Imprimir o guardar PDF
+    </button>
+  </div>
+
+  <article class="sheet">
+    <div class="strip"></div>
+    <div class="stamp">PAGADO</div>
+    <div class="pad">
+      <header>
+        <div class="brand">
+          <div class="logo"><svg viewBox="0 0 24 24"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#e879f9"/></linearGradient></defs><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z" fill="url(#g)"/></svg></div>
+          <div class="from">
+            <h1 class="brand-name">{{STORE}}</h1>
+            <p>{{LEGAL}} · RUC {{RUC}}</p>
+            <p>{{STORE_ADDR}} · {{STORE_PHONE}}</p>
+          </div>
+        </div>
+        <div class="doc">
+          <p class="kind">FACTURA</p>
+          <p class="no">{{INV}}</p>
+          <p style="margin:0;color:var(--muted)">Pedido {{ORDER}}</p>
+        </div>
+      </header>
+
+      <section class="meta">
+        <div><h3>Facturado a</h3><strong>{{CUSTOMER}}</strong><p>{{EMAIL}}</p><p>{{ADDRESS}}</p></div>
+        <div><h3>Fecha de emisión</h3><strong>{{DATE}}</strong><p>{{TIME}}</p></div>
+        <div><h3>Estado</h3><strong style="color:var(--ok)">Pagada</strong><p>Moneda: dólares (USD)</p></div>
+      </section>
+
+      <table>
+        <thead><tr><th>Descripción</th><th class="n">Cant.</th><th class="n">Precio unitario</th><th class="n">Importe</th></tr></thead>
+        <tbody>{{ROWS}}</tbody>
+      </table>
+
+      <section class="bottom">
+        <div class="pay">
+          <h3>Forma de pago</h3>
+          <p><strong>{{METHOD}}</strong></p>
+          <p class="ref">Referencia de la transacción: {{REF}}</p>
+        </div>
+        <div class="sum">
+          <div><span class="muted">Subtotal</span><span>{{SUBTOTAL}}</span></div>
+          <div><span class="muted">IVA (15%)</span><span>{{TAX}}</span></div>
+          <div><span class="muted">Envío</span><span>{{SHIPPING}}</span></div>
+          <div class="total"><span>Total pagado</span><span>{{TOTAL}}</span></div>
+        </div>
+      </section>
+
+      <footer class="notes">
+        <div>
+          <p class="thanks">Gracias por tu compra.</p>
+          <p>Garantía de 12 meses en todos los productos. Para cambios o soporte escribinos a {{STORE_EMAIL}} con el número de factura.</p>
+        </div>
+        <p>Documento de demostración: generado por el sistema de GamerStore.</p>
+      </footer>
+    </div>
+  </article>
+</body>
+</html>

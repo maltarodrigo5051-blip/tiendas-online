@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GamerStore</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%230d0b1e'/%3E%3Cpath d='M13 3 5 14h6l-1 7 8-11h-6l1-7Z' fill='%2322d3ee'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <header class="nav">
+    <a class="logo" href="#">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#e879f9"/></linearGradient></defs><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z" fill="url(#lg)"/></svg>
+      <span>GamerStore</span>
+    </a>
+    <nav class="links">
+      <a href="#" data-route="store" class="is-active">Tienda</a>
+      <a href="#admin" data-route="admin">Inventario</a>
+    </nav>
+    <button class="cart-btn" id="open-cart" aria-label="Abrir carrito">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2M10 21h.01M17 21h.01"/></svg>
+      <span>Carrito</span>
+      <b class="badge" id="cart-count">0</b>
+    </button>
+  </header>
+
+  <!-- ===================== TIENDA ===================== -->
+  <main id="store">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="hero-kicker"><span class="dot"></span> Pago seguro con verificación de tu banco</p>
+        <h1>Equipo que se siente <span class="rgb-text">rápido</span>.</h1>
+        <p class="hero-sub">Teclados, audio, monitores y más para jugar y crear. Envío a todo Nicaragua y garantía de 12 meses.</p>
+        <div class="hero-cta">
+          <a class="btn-rgb" href="#catalogo">Ver productos</a>
+          <span class="hero-note">Envío gratis desde US$100</span>
+        </div>
+      </div>
+      <div class="hero-art" id="hero-art">
+        <div class="frame">
+          <img src="https://images.unsplash.com/photo-1614179924047-e1ab49a0a0cf?w=1100&q=80&auto=format&fit=crop" alt="Escritorio gamer con monitor curvo y luces cian y violeta" fetchpriority="high">
+        </div>
+        <div class="float f1"><b>165 Hz</b><span>Monitores QHD</span></div>
+        <div class="float f2"><b>3-D Secure</b><span>Pagos protegidos</span></div>
+      </div>
+    </section>
+
+    <section class="trust">
+      <div><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6l-8-3Zm-3 9 2 2 4-4"/></svg><p><b>Pago protegido</b><span>Tu tarjeta nunca se guarda</span></p></div>
+      <div><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7M7 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm10 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></svg><p><b>Envío en 48 horas</b><span>A todo el país</span></p></div>
+      <div><svg viewBox="0 0 24 24"><path d="M12 8v4l3 2M21 12a9 9 0 1 1-9-9 9 9 0 0 1 9 9Z"/></svg><p><b>Garantía de 12 meses</b><span>Cambio directo si falla</span></p></div>
+      <div><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM8 9h8M8 13h8M8 17h5"/></svg><p><b>Factura al instante</b><span>Lista para imprimir</span></p></div>
+    </section>
+
+    <section class="catalog" id="catalogo">
+      <div class="catalog-head">
+        <h2>Productos</h2>
+        <div class="chips" id="filters"></div>
+      </div>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <footer class="foot">
+      <p>GamerStore · Proyecto de portafolio. Los pagos funcionan en modo prueba.</p>
+      <p>Fotos de <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a>.</p>
+    </footer>
+  </main>
+
+  <!-- ===================== INVENTARIO ===================== -->
+  <main id="admin" hidden>
+    <section class="admin-head">
+      <div>
+        <h1>Inventario y ventas</h1>
+        <p class="muted">Todo lo que se vende en la tienda descuenta stock y queda registrado aquí.</p>
+      </div>
+      <button class="btn-ghost" id="refresh-admin">
+        <svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.9-3.9L4 9M4 4v5h5M4 13a8 8 0 0 0 14.9 3.9L20 15m0 5v-5h-5"/></svg>
+        Actualizar
+      </button>
+    </section>
+
+    <section class="kpis" id="kpis"></section>
+    <div class="alert" id="low-alert" hidden></div>
+
+    <div class="admin-grid">
+      <section class="panel">
+        <div class="panel-head"><h2>Productos</h2><span class="muted" id="inv-count"></span></div>
+        <div class="inv" id="inventory"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><h2>Agregar producto</h2></div>
+        <form id="new-product" class="form-grid" autocomplete="off">
+          <label>SKU <input name="sku" required placeholder="GS-SP-01" pattern="[A-Z0-9\-]{3,20}"></label>
+          <label>Categoría <input name="category" required placeholder="Audio"></label>
+          <label class="wide">Nombre <input name="pname" required maxlength="80" placeholder="Parlante Bass Cube"></label>
+          <label class="wide">Descripción corta <input name="tagline" maxlength="120" placeholder="Batería de 20 horas y luces RGB"></label>
+          <label>Precio (US$) <input name="price" type="number" min="0.01" step="0.01" required></label>
+          <label>Stock inicial <input name="stock" type="number" min="0" step="1" required></label>
+          <label class="wide">Foto (enlace https) <input name="image" type="url" placeholder="https://images.unsplash.com/..."></label>
+          <button class="btn-rgb wide">Agregar al inventario</button>
+        </form>
+      </section>
+    </div>
+
+    <div class="admin-grid two">
+      <section class="panel">
+        <div class="panel-head"><h2>Pedidos</h2></div>
+        <div class="table" id="orders"></div>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><h2>Movimientos de inventario</h2></div>
+        <ul class="moves" id="moves"></ul>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===================== CARRITO ===================== -->
+  <div class="scrim" id="scrim" hidden></div>
+  <aside class="drawer" id="drawer" aria-label="Carrito" aria-hidden="true">
+    <div class="drawer-head">
+      <h2>Tu carrito</h2>
+      <button class="icon-btn" id="close-cart" aria-label="Cerrar carrito"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <div class="ship" id="ship"><p id="ship-text"></p><div class="ship-bar"><span id="ship-fill"></span></div></div>
+    <ul class="cart-items" id="cart-items"></ul>
+    <div class="cart-empty" id="cart-empty">
+      <svg viewBox="0 0 24 24"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2"/></svg>
+      <p><b>Tu carrito está vacío</b></p>
+      <p class="muted">Agregá algo de la tienda y aparece aquí.</p>
+    </div>
+    <div class="drawer-foot">
+      <dl class="sums" id="cart-sums"></dl>
+      <button class="btn-rgb full" id="go-checkout" disabled>Ir a pagar</button>
+    </div>
+  </aside>
+
+  <!-- ===================== CHECKOUT ===================== -->
+  <div class="modal" id="checkout" hidden>
+    <div class="checkout" role="dialog" aria-modal="true" aria-labelledby="co-title">
+      <button class="icon-btn close" id="close-checkout" aria-label="Cerrar"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      <form class="co-form" id="co-form" autocomplete="on" novalidate>
+        <h2 id="co-title">Finalizar compra</h2>
+
+        <fieldset>
+          <legend>Datos de entrega</legend>
+          <label>Nombre completo <input name="fullname" autocomplete="name" required></label>
+          <label>Correo <input name="email" type="email" autocomplete="email" required></label>
+          <label class="wide">Dirección <input name="address" autocomplete="street-address" required placeholder="Barrio, calle y ciudad"></label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Forma de pago</legend>
+          <div class="methods" id="methods">
+            <label class="method"><input type="radio" name="paymethod" value="card" checked><span>Tarjeta <small>GamerStore Pay</small></span></label>
+            <label class="method" id="stripe-method" hidden><input type="radio" name="paymethod" value="stripe"><span>Stripe <small>Checkout seguro</small></span></label>
+          </div>
+
+          <div id="card-fields">
+            <div class="cardbox">
+              <div class="card3d" id="card3d">
+                <div class="face front">
+                  <div class="emv"></div>
+                  <div class="brand" id="cv-brand">GAMERSTORE</div>
+                  <div class="cv-number" id="cv-number">•••• •••• •••• ••••</div>
+                  <div class="cv-row"><div><small>Titular</small><span id="cv-name">TU NOMBRE</span></div><div><small>Vence</small><span id="cv-exp">MM/AA</span></div></div>
+                </div>
+                <div class="face back"><div class="stripe"></div><div class="cvc-box"><small>CVC</small><span id="cv-cvc">•••</span></div></div>
+              </div>
+            </div>
+            <label class="wide">Número de tarjeta <input name="number" inputmode="numeric" autocomplete="cc-number" placeholder="4242 4242 4242 4242" maxlength="23"></label>
+            <label class="wide">Nombre en la tarjeta <input name="holder" autocomplete="cc-name"></label>
+            <label>Vence (MM/AA) <input name="exp" inputmode="numeric" autocomplete="cc-exp" placeholder="12/30" maxlength="5"></label>
+            <label>CVC <input name="cvc" inputmode="numeric" autocomplete="cc-csc" placeholder="123" maxlength="4"></label>
+            <div class="test-cards wide">
+              <span class="muted">Tarjetas de prueba:</span>
+              <button type="button" data-card="4242424242424242">Aprobada</button>
+              <button type="button" data-card="4000002760003184">Pide código</button>
+              <button type="button" data-card="4000000000009995">Sin fondos</button>
+            </div>
+          </div>
+        </fieldset>
+        <p class="form-error" id="co-error" role="alert"></p>
+      </form>
+
+      <aside class="co-summary">
+        <h3>Tu pedido</h3>
+        <ul id="co-items"></ul>
+        <dl class="sums" id="co-sums"></dl>
+        <button class="btn-pay" id="pay-btn" form="co-form" type="submit">
+          <span class="lbl" id="pay-label">Pagar</span>
+          <span class="spinner" aria-hidden="true"></span>
+        </button>
+        <p class="secure"><svg viewBox="0 0 24 24"><path d="M7 11V8a5 5 0 0 1 10 0v3M5 11h14v10H5z"/></svg> La tarjeta va directo a la pasarela. La tienda solo recibe un token y los últimos 4 dígitos.</p>
+      </aside>
+    </div>
+  </div>
+
+  <!-- 3-D Secure -->
+  <div class="modal" id="tds" hidden>
+    <form class="tds" id="tds-form" role="dialog" aria-modal="true" aria-labelledby="tds-title">
+      <div class="bank"><svg viewBox="0 0 24 24"><path d="M3 10 12 4l9 6M5 10v8M9 10v8M15 10v8M19 10v8M3 20h18"/></svg> Banco emisor · Verificación</div>
+      <h2 id="tds-title">Confirmá que sos vos</h2>
+      <p class="muted">Tu banco envió un código de 6 dígitos a tu teléfono para aprobar el pago de <b id="tds-amount"></b> con la tarjeta <b id="tds-card"></b>.</p>
+      <input id="tds-code" inputmode="numeric" maxlength="6" placeholder="••••••" autocomplete="one-time-code" aria-label="Código de verificación">
+      <p class="hint">Modo prueba: el código es <b>123456</b></p>
+      <p class="form-error" id="tds-error" role="alert"></p>
+      <button class="btn-pay" id="tds-btn"><span class="lbl">Confirmar pago</span><span class="spinner" aria-hidden="true"></span></button>
+    </form>
+  </div>
+
+  <!-- Éxito -->
+  <div class="modal" id="success" hidden>
+    <div class="confetti" id="confetti" aria-hidden="true"></div>
+    <div class="done" role="dialog" aria-modal="true" aria-labelledby="done-title">
+      <div class="ring"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="23"/><path d="M15 27l7 7 15-16"/></svg></div>
+      <h2 id="done-title">¡Pago aprobado!</h2>
+      <p class="muted" id="done-sub"></p>
+      <div class="done-actions">
+        <a class="btn-rgb" id="invoice-link" target="_blank" rel="noopener">Ver factura</a>
+        <button class="btn-ghost" id="keep-shopping">Seguir comprando</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
